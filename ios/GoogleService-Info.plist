@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>578928170542-j534patkbhj9q4iv03cipp7nkb6d2un8.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.578928170542-j534patkbhj9q4iv03cipp7nkb6d2un8</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDlo1M1JTSYJdeXRbb7RhdozAugauhGZys</string>
+	<key>GCM_SENDER_ID</key>
+	<string>578928170542</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.scottfits.butterfly</string>
+	<key>PROJECT_ID</key>
+	<string>butterfly-85e3f</string>
+	<key>STORAGE_BUCKET</key>
+	<string>butterfly-85e3f.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:578928170542:ios:48473f1aa8587a4e33f1bf</string>
+	<key>DATABASE_URL</key>
+	<string>https://butterfly-85e3f.firebaseio.com</string>
+</dict>
+</plist>
