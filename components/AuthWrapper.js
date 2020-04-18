@@ -10,6 +10,7 @@ export default function AuthWrapper() {
 
   // Handle user state changes
   function onAuthStateChanged(user) {
+    // auth().signOut();
     setUser(user);
     if (initializing) setInitializing(false);
   }

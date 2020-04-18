@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
-import {Button, TextInput, Text} from 'react-native';
+import {Button, TextInput, Text, View} from 'react-native';
 import auth from '@react-native-firebase/auth';
+import styles from './Style';
 
 export default function PhoneSignIn() {
   // If null, no SMS has been sent
   const [confirm, setConfirm] = useState(null);
 
+  const [phone, setPhone] = useState('');
   const [code, setCode] = useState('');
 
   // Handle the button press
@@ -22,19 +24,60 @@ export default function PhoneSignIn() {
     }
   }
 
+  function formatPhone(phone) {
+    const areaCode = phone.slice(0, 3);
+    const firstPart = phone.slice(3, 6);
+    const secondPart = phone.slice(6, 10);
+    return `+1 ${areaCode} ${firstPart} ${secondPart}`;
+  }
+
   if (!confirm) {
     return (
-      <Button
-        title="Phone Number Sign In"
-        onPress={() => signInWithPhoneNumber('+1 602 881 2149')}
-      />
+      <>
+        <View style={{height: 40}} />
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <TextInput
+            keyboardType="number-pad"
+            placeholder="415 456 4321"
+            autoFocus={true}
+            style={styles.bigField}
+            value={phone}
+            onChangeText={text => setPhone(text)}
+          />
+        </View>
+        <View style={{height: 40}} />
+
+        <Button
+          title="Sign In"
+          onPress={() => signInWithPhoneNumber(formatPhone(phone))}
+        />
+      </>
     );
   }
 
   return (
     <>
-      <Text>Enter verification code</Text>
-      <TextInput value={code} onChangeText={text => setCode(text)} />
+      <View style={{height: 40}} />
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <TextInput
+          keyboardType="number-pad"
+          placeholder={'Verification code'}
+          value={code}
+          style={styles.bigField}
+          onChangeText={text => setCode(text)}
+        />
+      </View>
+      <View style={{height: 40}} />
       <Button title="Confirm Code" onPress={() => confirmCode()} />
     </>
   );
