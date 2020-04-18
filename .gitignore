@@ -4,6 +4,8 @@
 
 # Xcode
 #
+AgoraRNQuickstart.xcodeproj/project.pbxproj
+Podfile.lock
 build/
 *.pbxuser
 !default.pbxuser
