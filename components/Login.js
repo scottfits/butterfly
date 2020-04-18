@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, TextInput, Text} from 'react-native';
+import {Button, TextInput} from 'react-native';
 import auth from '@react-native-firebase/auth';
 
 export default function PhoneSignIn() {

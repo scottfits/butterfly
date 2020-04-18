@@ -1,6 +1,5 @@
 import {AppRegistry} from 'react-native';
-import LoginScreen from './screens/LoginScreen';
-import Video from './components/Video';
+import AuthWrapper from './components/AuthWrapper';
 import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => Video);
+AppRegistry.registerComponent(appName, () => AuthWrapper);
