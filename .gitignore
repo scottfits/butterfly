@@ -4,6 +4,8 @@
 
 # Xcode
 #
+ios/AgoraRNQuickstart.xcodeproj/project.pbxproj
+ios/Podfile.lock
 AgoraRNQuickstart.xcodeproj/project.pbxproj
 Podfile.lock
 build/
