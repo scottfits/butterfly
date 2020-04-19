@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   Platform,
+  Alert,
 } from 'react-native';
 import {RtcEngine, AgoraView} from 'react-native-agora';
 import styles from './Style';
@@ -40,6 +41,8 @@ class Video extends Component {
       appid: config.appid,
       channelName: 'channel-x', //Channel Name for the current session
       joinSucceed: false, //State variable for storing success
+      timeEnded: false, //State variable to figure out if 30s has passed
+      timer: 4 // Countdown someone sees on their screen
     };
     if (Platform.OS === 'android') {
       //Request required permissions from Android
@@ -70,9 +73,23 @@ class Video extends Component {
       this.setState({
         joinSucceed: true, //Set state variable to true
       });
+      // setTimeout(() => {
+      //   this.setTimePassed();
+      // }, 3000);
+
     });
+    this.interval = setInterval(
+      () => {
+        this.setState((prevState)=> ({ timer: prevState.timer - 1 }))
+        if(this.state.timer <= 0) {
+          this.setTimePassed();
+        }
+      },
+      1000
+    );
     RtcEngine.init(config); //Initialize the RTC engine
   }
+
   /**
    * @name startCall
    * @description Function to start the call
@@ -81,6 +98,7 @@ class Video extends Component {
     RtcEngine.joinChannel(this.state.channelName, this.state.uid); //Join Channel
     RtcEngine.enableAudio(); //Enable the audio
   };
+
   /**
    * @name endCall
    * @description Function to end the call
@@ -90,8 +108,24 @@ class Video extends Component {
     this.setState({
       peerIds: [],
       joinSucceed: false,
+      timer: 4,
     });
   };
+
+  /**
+   * @name setTimePassed
+   * @description Function to start the timer
+   */
+  setTimePassed() {
+    this.setState({timeEnded: true});
+    RtcEngine.leaveChannel();
+    this.setState({
+      peerIds: [],
+      joinSucceed: false,
+      timer: 4,
+    });
+  }
+
   /**
    * @name videoView
    * @description Function to return the view for the app
@@ -119,56 +153,7 @@ class Video extends Component {
               <View />
             ) : (
               <View style={styles.fullView}>
-                {this.state.peerIds.length > 3 ? ( //view for four videostreams
-                  <View style={styles.full}>
-                    <View style={styles.halfViewRow}>
-                      <AgoraView
-                        style={styles.half}
-                        remoteUid={this.state.peerIds[0]}
-                        mode={1}
-                      />
-                      <AgoraView
-                        style={styles.half}
-                        remoteUid={this.state.peerIds[1]}
-                        mode={1}
-                      />
-                    </View>
-                    <View style={styles.halfViewRow}>
-                      <AgoraView
-                        style={styles.half}
-                        remoteUid={this.state.peerIds[2]}
-                        mode={1}
-                      />
-                      <AgoraView
-                        style={styles.half}
-                        remoteUid={this.state.peerIds[3]}
-                        mode={1}
-                      />
-                    </View>
-                  </View>
-                ) : this.state.peerIds.length > 2 ? ( //view for three videostreams
-                  <View style={styles.full}>
-                    <View style={styles.half}>
-                      <AgoraView
-                        style={styles.full}
-                        remoteUid={this.state.peerIds[0]}
-                        mode={1}
-                      />
-                    </View>
-                    <View style={styles.halfViewRow}>
-                      <AgoraView
-                        style={styles.half}
-                        remoteUid={this.state.peerIds[1]}
-                        mode={1}
-                      />
-                      <AgoraView
-                        style={styles.half}
-                        remoteUid={this.state.peerIds[2]}
-                        mode={1}
-                      />
-                    </View>
-                  </View>
-                ) : this.state.peerIds.length > 1 ? ( //view for two videostreams
+                {this.state.peerIds.length > 1 && !this.state.timeEnded ? ( //view for two videostreams
                   <View style={styles.full}>
                     <AgoraView
                       style={styles.full}
@@ -180,15 +165,20 @@ class Video extends Component {
                       remoteUid={this.state.peerIds[1]}
                       mode={1}
                     />
+                  <Text> {this.state.timer} </Text>
                   </View>
-                ) : this.state.peerIds.length > 0 ? ( //view for videostream
+                ) : this.state.peerIds.length > 0 && !this.state.timeEnded ? ( //view for videostream
+                  <View style={styles.fullView}>
                   <AgoraView
                     style={styles.full}
                     remoteUid={this.state.peerIds[0]}
                     mode={1}
                   />
+                  <Text> {this.state.timer} </Text>
+                </View>
                 ) : (
                   <View>
+                    <Text> {this.state.timer} </Text>
                     <Text style={styles.noUserText}> No users connected </Text>
                   </View>
                 )}
