@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {RtcEngine, AgoraView} from 'react-native-agora';
 import styles from './Style';
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 const {Agora} = NativeModules; //Define Agora object as a native module
 
@@ -97,6 +98,7 @@ class Video extends Component {
   startCall = () => {
     RtcEngine.joinChannel(this.state.channelName, this.state.uid); //Join Channel
     RtcEngine.enableAudio(); //Enable the audio
+    console.log("START")
     this.setState({
       timer: 10
     });
@@ -177,6 +179,12 @@ class Video extends Component {
   </TouchableOpacity>,
   ]
 
+  config = {
+    velocityThreshold: 0.3,
+    directionalOffsetThreshold: 80
+  };
+
+
   /**
    * @name videoView
    * @description Function to return the view for the app
@@ -192,6 +200,7 @@ class Video extends Component {
             {!this.state.joinSucceed ? (
               <View />
             ) : (
+            <GestureRecognizer onSwipeLeft={this.endCall} config={this.config}>
               <View style={styles.fullView}>
                 {this.state.peerIds.length > 1 && !this.state.timeEnded ? ( //view for two videostreams
                   <View style={styles.full}>
@@ -229,6 +238,7 @@ class Video extends Component {
                   mode={1}
                 />
               </View>
+              </GestureRecognizer>
             )}
           </View>
         }
