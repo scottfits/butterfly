@@ -54,6 +54,7 @@ export default function PhoneSignIn() {
 
         <Button
           disabled={phone.length != 10}
+          color="#c669c6"
           title="Sign In"
           onPress={() => signInWithPhoneNumber(formatPhone(phone))}
         />
@@ -82,6 +83,7 @@ export default function PhoneSignIn() {
       <Button
         disabled={code.length != 6}
         title="Confirm Code"
+        color="#c669c6"
         onPress={() => confirmCode()}
       />
     </>
