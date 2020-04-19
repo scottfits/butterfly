@@ -3,11 +3,10 @@
 .DS_Store
 
 # Xcode
-#
-ios/AgoraRNQuickstart.xcodeproj/project.pbxproj
-ios/Podfile.lock
-AgoraRNQuickstart.xcodeproj/project.pbxproj
+project.pbxproj
 Podfile.lock
+ios/AgoraRNQuickstart.xcodeproj/project*
+
 build/
 *.pbxuser
 !default.pbxuser
@@ -61,3 +60,4 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+ios/AgoraRNQuickstart.xcodeproj/project*
