@@ -15,7 +15,7 @@ export default (LoginScreen = () => {
         <Image
           style={{width: 150, height: 150}}
           reiszeMode="contain"
-          source={require('../butterfly-icon.png')}
+          source={require('../butterfly-big.png')}
         />
       </View>
       <View style={{height: 70}} />
