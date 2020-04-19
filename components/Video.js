@@ -97,6 +97,9 @@ class Video extends Component {
   startCall = () => {
     RtcEngine.joinChannel(this.state.channelName, this.state.uid); //Join Channel
     RtcEngine.enableAudio(); //Enable the audio
+    this.setState({
+      timer: 10
+    });
   };
 
   componentDidUpdate(){
