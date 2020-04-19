@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
 import LoginScreen from '../screens/LoginScreen.js';
+import CreateProfileScreen from '../screens/CreateProfileScreen.js';
 import Video from './Video';
 
 export default function AuthWrapper() {
@@ -21,6 +22,10 @@ export default function AuthWrapper() {
   }, []);
 
   if (initializing) return null;
+
+  // if (USER HAS NO INFO ENTRY) {
+  //   return <CreateProfileScreen />;
+  // }
 
   if (!user) {
     return <LoginScreen />;

@@ -8,7 +8,6 @@ export default (LoginScreen = () => {
       <View style={{height: 150}} />
       <View
         style={{
-          flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
         }}>

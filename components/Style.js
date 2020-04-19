@@ -63,6 +63,16 @@ export default StyleSheet.create({
     backgroundColor: '#efefef',
     borderRadius: 15,
   },
+  bigButton: {
+    alignItems: 'center',
+    width: 140,
+    height: 80,
+    fontSize: 20,
+    padding: 10,
+    color: 'black',
+    backgroundColor: '#efefef',
+    borderRadius: 15,
+  },
   noUserText: {
     paddingHorizontal: 10,
     paddingVertical: 5,

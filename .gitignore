@@ -4,7 +4,7 @@
 
 # Xcode
 project.pbxproj
-Podfile.lock
+/ios/Podfile.lock
 ios/AgoraRNQuickstart.xcodeproj/project*
 
 build/
@@ -60,4 +60,5 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+Podfile.lock
 ios/AgoraRNQuickstart.xcodeproj/project*
