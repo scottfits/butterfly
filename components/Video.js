@@ -37,12 +37,14 @@ class Video extends Component {
     super(props);
     this.state = {
       peerIds: [], //Array for storing connected peers
+      buttons: this.buttonsBeforeCall,
       uid: Math.floor(Math.random() * 100), //Generate a UID for local user
       appid: config.appid,
       channelName: 'channel-x', //Channel Name for the current session
       joinSucceed: false, //State variable for storing success
       timeEnded: false, //State variable to figure out if 30s has passed
-      timer: 4 // Countdown someone sees on their screen
+      timer: 10, // Countdown someone sees on their screen
+      extended: false // if someone extends the timer, there should be no interval.
     };
     if (Platform.OS === 'android') {
       //Request required permissions from Android
@@ -72,10 +74,8 @@ class Video extends Component {
       RtcEngine.startPreview(); //Start RTC preview
       this.setState({
         joinSucceed: true, //Set state variable to true
+        buttons: this.buttonsDuringCall
       });
-      // setTimeout(() => {
-      //   this.setTimePassed();
-      // }, 3000);
 
     });
     this.interval = setInterval(
@@ -99,6 +99,21 @@ class Video extends Component {
     RtcEngine.enableAudio(); //Enable the audio
   };
 
+  componentDidUpdate(){
+    if(this.state.timer === 10){
+      clearInterval(this.interval);
+      this.interval = setInterval(
+        () => {
+          this.setState((prevState)=> ({ timer: prevState.timer - 1 }))
+          if(this.state.timer <= 0) {
+            this.setTimePassed();
+          }
+        },
+        1000
+      );
+    }
+  }
+
   /**
    * @name endCall
    * @description Function to end the call
@@ -108,9 +123,17 @@ class Video extends Component {
     this.setState({
       peerIds: [],
       joinSucceed: false,
-      timer: 4,
+      timer: 10,
+      buttons: this.buttonsBeforeCall,
     });
   };
+
+  extendedCall = () => {
+    this.setState({
+      extended: true
+    });
+    clearInterval(this.interval);
+  }
 
   /**
    * @name setTimePassed
@@ -122,9 +145,34 @@ class Video extends Component {
     this.setState({
       peerIds: [],
       joinSucceed: false,
-      timer: 4,
+      timer: 10,
+      buttons: this.buttonsBeforeCall
     });
   }
+
+  buttonsBeforeCall = [
+    <TouchableOpacity
+    title="Start Call"
+    onPress={this.startCall}
+    style={styles.button}>
+    <Text style={styles.buttonText}> Start Call </Text>
+  </TouchableOpacity>,
+  ]
+
+  buttonsDuringCall = [
+  <TouchableOpacity
+    title="End Call"
+    onPress={this.endCall}
+    style={styles.button}>
+    <Text style={styles.buttonText}> End Call </Text>
+  </TouchableOpacity>,
+    <TouchableOpacity
+    title="End Call"
+    onPress={this.extendedCall}
+    style={styles.button}>
+    <Text style={styles.buttonText}> Extend Call </Text>
+  </TouchableOpacity>,
+  ]
 
   /**
    * @name videoView
@@ -136,18 +184,7 @@ class Video extends Component {
         {
           <View style={styles.max}>
             <View style={styles.buttonHolder}>
-              <TouchableOpacity
-                title="Start Call"
-                onPress={this.startCall}
-                style={styles.button}>
-                <Text style={styles.buttonText}> Start Call </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                title="End Call"
-                onPress={this.endCall}
-                style={styles.button}>
-                <Text style={styles.buttonText}> End Call </Text>
-              </TouchableOpacity>
+            {this.state.buttons}
             </View>
             {!this.state.joinSucceed ? (
               <View />
