@@ -53,6 +53,7 @@ export default function PhoneSignIn() {
         <View style={{height: 40}} />
 
         <Button
+          disabled={phone.length != 10}
           title="Sign In"
           onPress={() => signInWithPhoneNumber(formatPhone(phone))}
         />
@@ -78,7 +79,11 @@ export default function PhoneSignIn() {
         />
       </View>
       <View style={{height: 40}} />
-      <Button title="Confirm Code" onPress={() => confirmCode()} />
+      <Button
+        disabled={code.length != 6}
+        title="Confirm Code"
+        onPress={() => confirmCode()}
+      />
     </>
   );
 }
